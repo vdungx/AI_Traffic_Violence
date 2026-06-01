@@ -231,8 +231,8 @@ Cấu hình được lưu trong `database/configuration.db`, có thể điều c
 | `width_in_meter` | Chiều rộng thực tế (mét) | 7.0 |
 | `actual_time` | Thời gian thực (giây) | 5.0 |
 | `yolo_time` | Thời gian xử lý YOLO | 15.0 |
-| `location` | Địa điểm triển khai | Indonesia |
-| `Model` | Model YOLO sử dụng | yolov8x.pt |
+| `location` | Địa điểm triển khai | Việt Nam |
+| `Model` | Model YOLO sử dụng | yolov8m.pt |
 
 ---
 
@@ -341,31 +341,7 @@ ai_traffic_violence/
     └── pipeline_diagram.png     # Sơ đồ pipeline
 ```
 
----
 
-## 🤝 Đóng góp
-
-Mọi đóng góp đều được hoan nghênh! Vui lòng:
-
-1. Fork repository
-2. Tạo branch feature mới (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push lên branch (`git push origin feature/AmazingFeature`)
-5. Mở Pull Request
-
----
-
-## 📄 Giấy phép
-
-Dự án này được phát triển cho mục đích **Đồ án tốt nghiệp** và nghiên cứu học thuật.
-
----
-
-## 📬 Liên hệ
-
-**Tác giả:** Trần Văn Dũng
-
----
 
 <p align="center">
   <b>AI Traffic Violence Detection</b><br>
