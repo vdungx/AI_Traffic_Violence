@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vi phạm giao thông</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Trình đơn</h2>
+            <ul>
+                <li><a href="/dashboard" class="active">Bảng điều khiển</a></li>
+                <li><a href="/change-user">Đổi người dùng</a></li>
+                <li><a href="#" onclick="logout()">Đăng xuất</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h1>Vi phạm giao thông</h1>
+            <div class="filters">
+                <label for="filter-date">Lọc theo ngày:</label>
+                <input type="text" id="filter-date" placeholder="dd-mm-yyyy" onchange="filterByDate(this.value)">
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ngày</th>
+                        <th>Biển số</th>
+                        <th>Loại vi phạm</th>
+                        <th>Loại xe</th>
+                        <th>Mở ảnh</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        <td>{{ row['id'] }}</td>
+                        <td>{{ row['date'] }}</td>
+                        <td>
+                            {% if 'Not Detected' in row['plat_license'] or 'Không' in row['plat_license'] %}
+                                Không phát hiện
+                            {% elif row['plat_license'] %}
+                                <img src="/static/{{ row['plat_license'] }}" alt="Biển số" style="width:100px;height:auto;">
+                            {% else %}
+                                Không phát hiện
+                            {% endif %}
+                        </td>
+                        <td>{{ row['violence_category'] }}</td>
+                        <td>{{ row['vehicle'] }}</td>
+                        <td><a href="/photo/{{ row['id'] }}">Mở ảnh</a></td>
+                        <td><button onclick="deleteRow({{ row['id'] }})">Xóa</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        function filterByDate(date) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('date', date);
+            window.location.href = url.toString();
+        }
+
+        function deleteRow(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa bản ghi này không?')) {
+                fetch(`/delete/${id}`, { method: 'DELETE' })
+                    .then(response => window.location.reload());
+            }
+        }
+
+        function logout() {
+            fetch('/logout', { method: 'POST' })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/';
+                    }
+                });
+        }
+    </script>
+</body>
+</html>

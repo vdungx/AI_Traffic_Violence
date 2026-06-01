@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết ảnh</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+    <div class="photo-container">
+        <img src="/static/{{ image_path }}" alt="Ảnh vi phạm" class="photo-img">
+        <div class="photo-details">
+            <p>
+                <strong>Biển số (ảnh):</strong>
+                {% if 'Not Detected' in plat_license_path or 'Không' in plat_license_path %}
+                    Không phát hiện
+                {% elif plat_license_path %}
+                    <img src="/static/{{ plat_license_path }}" alt="Biển số" class="license-img">
+                {% else %}
+                    Không phát hiện
+                {% endif %}
+            </p>
+            <p><strong>Ngày:</strong> {{ data['date'] }}</p>
+            <p><strong>Tốc độ:</strong> {{ speed }}</p>
+            <p><strong>Tốc độ tối đa:</strong> {{ data['max_speed'] }} km/h</p>
+            <p><strong>Phương tiện:</strong> {{ data['vehicle'] }}</p>
+            <p><strong>Lỗi vi phạm:</strong> {{ data['violence_category'] }}</p>
+            <p><strong>Địa điểm:</strong> {{ location }}</p>
+        </div>
+        <a href="/dashboard" class="btn-back">Quay lại Bảng điều khiển</a>
+    </div>
+</body>
+</html>

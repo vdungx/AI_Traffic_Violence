@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đổi Người Dùng</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Trình đơn</h2>
+            <ul>
+                <li><a href="/dashboard">Bảng điều khiển</a></li>
+                <li><a href="/change-user" class="active">Đổi Người Dùng</a></li>
+                <li><a href="#" onclick="logout()">Đăng xuất</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <h1>Đổi Người Dùng</h1>
+            <form method="POST">
+                <label for="last_username">Tên đăng nhập cũ</label>
+                <input type="text" id="last_username" name="last_username" required>
+                <label for="last_password">Mật khẩu cũ</label>
+                <input type="password" id="last_password" name="last_password" required>
+                <label for="new_username">Tên đăng nhập mới</label>
+                <input type="text" id="new_username" name="new_username" required>
+                <label for="new_password">Mật khẩu mới</label>
+                <input type="password" id="new_password" name="new_password" required>
+                <button type="submit">Đổi Người Dùng</button>
+                <p>{{ message }}</p>
+            </form>
+        </div>
+    </div>
+    <script>
+        function logout() {
+            fetch('/logout', { method: 'POST' })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/';
+                    }
+                });
+        }
+    </script>
+</body>
+</html>

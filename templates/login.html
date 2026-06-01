@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Đăng Nhập</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Đăng Nhập</h2>
+        <div class="input-group">
+            <input type="text" id="username" placeholder="Tên đăng nhập">
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Mật khẩu">
+        </div>
+        <button onclick="login()">Đăng Nhập</button>
+        <p id="notification"></p>
+    </div>
+
+    <script>
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                document.cookie = 'token=' + data.token + ';path=/';
+                window.location.href = '/dashboard';
+            } else {
+                document.getElementById('notification').textContent = data.message;
+            }
+        }
+    </script>
+</body>
+</html>
